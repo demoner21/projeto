@@ -3,7 +3,7 @@ body {
   background: #00000080;
   place-content: center;
   margin: 0;
-  font-family: Roboto, sans-serif;
+  font-family: Nunito, sans-serif;
   display: grid;
 }
 
@@ -12,16 +12,22 @@ h1 {
 }
 
 .onboard-container {
-  box-shadow: 10px, 10px, 30px #0000001a;
   min-width: 500px;
   text-align: center;
+  background: #fff;
+  border-radius: .7em;
+  padding: 4em;
+  box-shadow: 10px 10px 30px #0000001a;
+}
+
+.onboard {
   color: #fefefe;
   text-align: center;
-  background: #4c00ff;
-  border-radius: .7em;
+  background-color: #4c00ff;
+  border-radius: .3em;
   margin-top: 2em;
   padding: .7em;
-  font-size: .3em;
+  font-size: 1.3rem;
   text-decoration: none;
   display: inline-block;
 }
