@@ -142,88 +142,15 @@
       this[globalName] = mainExports;
     }
   }
-})({"V9qaj":[function(require,module,exports) {
+})({"kRtS3":[function(require,module,exports) {
 "use strict";
+var global = arguments[3];
 var HMR_HOST = null;
 var HMR_PORT = null;
 var HMR_SECURE = false;
 var HMR_ENV_HASH = "d6ea1d42532a7575";
 module.bundle.HMR_BUNDLE_ID = "118fb54817ce0ca8";
-function _toConsumableArray(arr) {
-    return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread();
-}
-function _nonIterableSpread() {
-    throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
-}
-function _iterableToArray(iter) {
-    if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter);
-}
-function _arrayWithoutHoles(arr) {
-    if (Array.isArray(arr)) return _arrayLikeToArray(arr);
-}
-function _createForOfIteratorHelper(o, allowArrayLike) {
-    var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"];
-    if (!it) {
-        if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") {
-            if (it) o = it;
-            var i = 0;
-            var F = function F() {};
-            return {
-                s: F,
-                n: function n() {
-                    if (i >= o.length) return {
-                        done: true
-                    };
-                    return {
-                        done: false,
-                        value: o[i++]
-                    };
-                },
-                e: function e(_e) {
-                    throw _e;
-                },
-                f: F
-            };
-        }
-        throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
-    }
-    var normalCompletion = true, didErr = false, err;
-    return {
-        s: function s() {
-            it = it.call(o);
-        },
-        n: function n() {
-            var step = it.next();
-            normalCompletion = step.done;
-            return step;
-        },
-        e: function e(_e2) {
-            didErr = true;
-            err = _e2;
-        },
-        f: function f() {
-            try {
-                if (!normalCompletion && it.return != null) it.return();
-            } finally{
-                if (didErr) throw err;
-            }
-        }
-    };
-}
-function _unsupportedIterableToArray(o, minLen) {
-    if (!o) return;
-    if (typeof o === "string") return _arrayLikeToArray(o, minLen);
-    var n = Object.prototype.toString.call(o).slice(8, -1);
-    if (n === "Object" && o.constructor) n = o.constructor.name;
-    if (n === "Map" || n === "Set") return Array.from(o);
-    if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
-}
-function _arrayLikeToArray(arr, len) {
-    if (len == null || len > arr.length) len = arr.length;
-    for(var i = 0, arr2 = new Array(len); i < len; i++)arr2[i] = arr[i];
-    return arr2;
-}
-/* global HMR_HOST, HMR_PORT, HMR_ENV_HASH, HMR_SECURE, chrome, browser */ /*::
+/* global HMR_HOST, HMR_PORT, HMR_ENV_HASH, HMR_SECURE, chrome, browser, importScripts */ /*::
 import type {
   HMRAsset,
   HMRMessage,
@@ -262,7 +189,7 @@ declare var HMR_ENV_HASH: string;
 declare var HMR_SECURE: boolean;
 declare var chrome: ExtensionContext;
 declare var browser: ExtensionContext;
-*/ var OVERLAY_ID = '__parcel__error__overlay__';
+*/ var OVERLAY_ID = "__parcel__error__overlay__";
 var OldModule = module.bundle.Module;
 function Module(moduleName) {
     OldModule.call(this, moduleName);
@@ -270,10 +197,10 @@ function Module(moduleName) {
         data: module.bundle.hotData,
         _acceptCallbacks: [],
         _disposeCallbacks: [],
-        accept: function accept(fn) {
+        accept: function(fn) {
             this._acceptCallbacks.push(fn || function() {});
         },
-        dispose: function dispose(fn) {
+        dispose: function(fn) {
             this._disposeCallbacks.push(fn);
         }
     };
@@ -282,62 +209,58 @@ function Module(moduleName) {
 module.bundle.Module = Module;
 var checkedAssets, acceptedAssets, assetsToAccept /*: Array<[ParcelRequire, string]> */ ;
 function getHostname() {
-    return HMR_HOST || (location.protocol.indexOf('http') === 0 ? location.hostname : 'localhost');
+    return HMR_HOST || (location.protocol.indexOf("http") === 0 ? location.hostname : "localhost");
 }
 function getPort() {
     return HMR_PORT || location.port;
 } // eslint-disable-next-line no-redeclare
 var parent = module.bundle.parent;
-if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
+if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== "undefined") {
     var hostname = getHostname();
     var port = getPort();
-    var protocol = HMR_SECURE || location.protocol == 'https:' && !/localhost|127.0.0.1|0.0.0.0/.test(hostname) ? 'wss' : 'ws';
-    var ws = new WebSocket(protocol + '://' + hostname + (port ? ':' + port : '') + '/'); // $FlowFixMe
-    ws.onmessage = function(event) {
+    var protocol = HMR_SECURE || location.protocol == "https:" && !/localhost|127.0.0.1|0.0.0.0/.test(hostname) ? "wss" : "ws";
+    var ws = new WebSocket(protocol + "://" + hostname + (port ? ":" + port : "") + "/"); // Safari doesn't support sourceURL in error stacks.
+    // eval may also be disabled via CSP, so do a quick check.
+    var supportsSourceURL = false;
+    try {
+        (0, eval)('throw new Error("test"); //# sourceURL=test.js');
+    } catch (err) {
+        supportsSourceURL = err.stack.includes("test.js");
+    } // $FlowFixMe
+    ws.onmessage = async function(event) {
         checkedAssets = {} /*: {|[string]: boolean|} */ ;
         acceptedAssets = {} /*: {|[string]: boolean|} */ ;
         assetsToAccept = [];
         var data = JSON.parse(event.data);
-        if (data.type === 'update') {
+        if (data.type === "update") {
             // Remove error overlay if there is one
-            if (typeof document !== 'undefined') removeErrorOverlay();
-            var assets = data.assets.filter(function(asset) {
-                return asset.envHash === HMR_ENV_HASH;
-            }); // Handle HMR Update
-            var handled = assets.every(function(asset) {
-                return asset.type === 'css' || asset.type === 'js' && hmrAcceptCheck(module.bundle.root, asset.id, asset.depsByBundle);
+            if (typeof document !== "undefined") removeErrorOverlay();
+            let assets = data.assets.filter((asset)=>asset.envHash === HMR_ENV_HASH); // Handle HMR Update
+            let handled = assets.every((asset)=>{
+                return asset.type === "css" || asset.type === "js" && hmrAcceptCheck(module.bundle.root, asset.id, asset.depsByBundle);
             });
             if (handled) {
-                console.clear();
-                assets.forEach(function(asset) {
-                    hmrApply(module.bundle.root, asset);
-                });
+                console.clear(); // Dispatch custom event so other runtimes (e.g React Refresh) are aware.
+                if (typeof window !== "undefined" && typeof CustomEvent !== "undefined") window.dispatchEvent(new CustomEvent("parcelhmraccept"));
+                await hmrApplyUpdates(assets);
                 for(var i = 0; i < assetsToAccept.length; i++){
                     var id = assetsToAccept[i][1];
                     if (!acceptedAssets[id]) hmrAcceptRun(assetsToAccept[i][0], id);
                 }
-            } else if ('reload' in location) location.reload();
+            } else if ("reload" in location) location.reload();
             else {
                 // Web extension context
-                var ext = typeof chrome === 'undefined' ? typeof browser === 'undefined' ? null : browser : chrome;
+                var ext = typeof chrome === "undefined" ? typeof browser === "undefined" ? null : browser : chrome;
                 if (ext && ext.runtime && ext.runtime.reload) ext.runtime.reload();
             }
         }
-        if (data.type === 'error') {
+        if (data.type === "error") {
             // Log parcel errors to console
-            var _iterator = _createForOfIteratorHelper(data.diagnostics.ansi), _step;
-            try {
-                for(_iterator.s(); !(_step = _iterator.n()).done;){
-                    var ansiDiagnostic = _step.value;
-                    var stack = ansiDiagnostic.codeframe ? ansiDiagnostic.codeframe : ansiDiagnostic.stack;
-                    console.error('🚨 [parcel]: ' + ansiDiagnostic.message + '\n' + stack + '\n\n' + ansiDiagnostic.hints.join('\n'));
-                }
-            } catch (err) {
-                _iterator.e(err);
-            } finally{
-                _iterator.f();
+            for (let ansiDiagnostic of data.diagnostics.ansi){
+                let stack = ansiDiagnostic.codeframe ? ansiDiagnostic.codeframe : ansiDiagnostic.stack;
+                console.error("\uD83D\uDEA8 [parcel]: " + ansiDiagnostic.message + "\n" + stack + "\n\n" + ansiDiagnostic.hints.join("\n"));
             }
-            if (typeof document !== 'undefined') {
+            if (typeof document !== "undefined") {
                 // Render the fancy html overlay
                 removeErrorOverlay();
                 var overlay = createErrorOverlay(data.diagnostics.html); // $FlowFixMe
@@ -349,35 +272,40 @@ if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
         console.error(e.message);
     };
     ws.onclose = function() {
-        console.warn('[parcel] 🚨 Connection to the HMR server was lost');
+        console.warn("[parcel] \uD83D\uDEA8 Connection to the HMR server was lost");
     };
 }
 function removeErrorOverlay() {
     var overlay = document.getElementById(OVERLAY_ID);
     if (overlay) {
         overlay.remove();
-        console.log('[parcel] ✨ Error resolved');
+        console.log("[parcel] \u2728 Error resolved");
     }
 }
 function createErrorOverlay(diagnostics) {
-    var overlay = document.createElement('div');
+    var overlay = document.createElement("div");
     overlay.id = OVERLAY_ID;
-    var errorHTML = '<div style="background: black; opacity: 0.85; font-size: 16px; color: white; position: fixed; height: 100%; width: 100%; top: 0px; left: 0px; padding: 30px; font-family: Menlo, Consolas, monospace; z-index: 9999;">';
-    var _iterator2 = _createForOfIteratorHelper(diagnostics), _step2;
-    try {
-        for(_iterator2.s(); !(_step2 = _iterator2.n()).done;){
-            var diagnostic = _step2.value;
-            var stack = diagnostic.codeframe ? diagnostic.codeframe : diagnostic.stack;
-            errorHTML += "\n      <div>\n        <div style=\"font-size: 18px; font-weight: bold; margin-top: 20px;\">\n          \uD83D\uDEA8 ".concat(diagnostic.message, "\n        </div>\n        <pre>").concat(stack, "</pre>\n        <div>\n          ").concat(diagnostic.hints.map(function(hint) {
-                return '<div>💡 ' + hint + '</div>';
-            }).join(''), "\n        </div>\n        ").concat(diagnostic.documentation ? "<div>\uD83D\uDCDD <a style=\"color: violet\" href=\"".concat(diagnostic.documentation, "\" target=\"_blank\">Learn more</a></div>") : '', "\n      </div>\n    ");
-        }
-    } catch (err) {
-        _iterator2.e(err);
-    } finally{
-        _iterator2.f();
+    let errorHTML = '<div style="background: black; opacity: 0.85; font-size: 16px; color: white; position: fixed; height: 100%; width: 100%; top: 0px; left: 0px; padding: 30px; font-family: Menlo, Consolas, monospace; z-index: 9999;">';
+    for (let diagnostic of diagnostics){
+        let stack = diagnostic.frames.length ? diagnostic.frames.reduce((p, frame)=>{
+            return `${p}
+<a href="/__parcel_launch_editor?file=${encodeURIComponent(frame.location)}" style="text-decoration: underline; color: #888" onclick="fetch(this.href); return false">${frame.location}</a>
+${frame.code}`;
+        }, "") : diagnostic.stack;
+        errorHTML += `
+      <div>
+        <div style="font-size: 18px; font-weight: bold; margin-top: 20px;">
+          🚨 ${diagnostic.message}
+        </div>
+        <pre>${stack}</pre>
+        <div>
+          ${diagnostic.hints.map((hint)=>"<div>\uD83D\uDCA1 " + hint + "</div>").join("")}
+        </div>
+        ${diagnostic.documentation ? `<div>📝 <a style="color: violet" href="${diagnostic.documentation}" target="_blank">Learn more</a></div>` : ""}
+      </div>
+    `;
     }
-    errorHTML += '</div>';
+    errorHTML += "</div>";
     overlay.innerHTML = errorHTML;
     return overlay;
 }
@@ -402,7 +330,7 @@ function updateLink(link) {
         if (link.parentNode !== null) // $FlowFixMe
         link.parentNode.removeChild(link);
     };
-    newLink.setAttribute('href', link.getAttribute('href').split('?')[0] + '?' + Date.now()); // $FlowFixMe
+    newLink.setAttribute("href", link.getAttribute("href").split("?")[0] + "?" + Date.now()); // $FlowFixMe
     link.parentNode.insertBefore(newLink, link.nextSibling);
 }
 var cssTimeout = null;
@@ -412,33 +340,82 @@ function reloadCSS() {
         var links = document.querySelectorAll('link[rel="stylesheet"]');
         for(var i = 0; i < links.length; i++){
             // $FlowFixMe[incompatible-type]
-            var href = links[i].getAttribute('href');
+            var href = links[i].getAttribute("href");
             var hostname = getHostname();
-            var servedFromHMRServer = hostname === 'localhost' ? new RegExp('^(https?:\\/\\/(0.0.0.0|127.0.0.1)|localhost):' + getPort()).test(href) : href.indexOf(hostname + ':' + getPort());
+            var servedFromHMRServer = hostname === "localhost" ? new RegExp("^(https?:\\/\\/(0.0.0.0|127.0.0.1)|localhost):" + getPort()).test(href) : href.indexOf(hostname + ":" + getPort());
             var absolute = /^https?:\/\//i.test(href) && href.indexOf(location.origin) !== 0 && !servedFromHMRServer;
             if (!absolute) updateLink(links[i]);
         }
         cssTimeout = null;
     }, 50);
 }
+async function hmrApplyUpdates(assets) {
+    global.parcelHotUpdate = Object.create(null);
+    let scriptsToRemove;
+    try {
+        // If sourceURL comments aren't supported in eval, we need to load
+        // the update from the dev server over HTTP so that stack traces
+        // are correct in errors/logs. This is much slower than eval, so
+        // we only do it if needed (currently just Safari).
+        // https://bugs.webkit.org/show_bug.cgi?id=137297
+        // This path is also taken if a CSP disallows eval.
+        if (!supportsSourceURL) {
+            let promises = assets.map((asset)=>{
+                if (asset.type === "js") {
+                    if (typeof document !== "undefined") {
+                        let script = document.createElement("script");
+                        script.src = asset.url;
+                        return new Promise((resolve, reject)=>{
+                            var _document$head;
+                            script.onload = ()=>resolve(script);
+                            script.onerror = reject;
+                            (_document$head = document.head) === null || _document$head === void 0 || _document$head.appendChild(script);
+                        });
+                    } else if (typeof importScripts === "function") return new Promise((resolve, reject)=>{
+                        try {
+                            importScripts(asset.url);
+                        } catch (err) {
+                            reject(err);
+                        }
+                    });
+                }
+            });
+            scriptsToRemove = await Promise.all(promises);
+        }
+        assets.forEach(function(asset) {
+            hmrApply(module.bundle.root, asset);
+        });
+    } finally{
+        delete global.parcelHotUpdate;
+        if (scriptsToRemove) scriptsToRemove.forEach((script)=>{
+            if (script) {
+                var _document$head2;
+                (_document$head2 = document.head) === null || _document$head2 === void 0 || _document$head2.removeChild(script);
+            }
+        });
+    }
+}
 function hmrApply(bundle, asset) {
     var modules = bundle.modules;
     if (!modules) return;
-    if (asset.type === 'css') reloadCSS();
-    else if (asset.type === 'js') {
-        var deps = asset.depsByBundle[bundle.HMR_BUNDLE_ID];
+    if (asset.type === "css") reloadCSS();
+    else if (asset.type === "js") {
+        let deps = asset.depsByBundle[bundle.HMR_BUNDLE_ID];
         if (deps) {
             if (modules[asset.id]) {
                 // Remove dependencies that are removed and will become orphaned.
                 // This is necessary so that if the asset is added back again, the cache is gone, and we prevent a full page reload.
-                var oldDeps = modules[asset.id][1];
-                for(var dep in oldDeps)if (!deps[dep] || deps[dep] !== oldDeps[dep]) {
-                    var id = oldDeps[dep];
-                    var parents = getParents(module.bundle.root, id);
+                let oldDeps = modules[asset.id][1];
+                for(let dep in oldDeps)if (!deps[dep] || deps[dep] !== oldDeps[dep]) {
+                    let id = oldDeps[dep];
+                    let parents = getParents(module.bundle.root, id);
                     if (parents.length === 1) hmrDelete(module.bundle.root, id);
                 }
             }
-            var fn = new Function('require', 'module', 'exports', asset.output);
+            if (supportsSourceURL) // Global eval. We would use `new Function` here but browser
+            // support for source maps is better with eval.
+            (0, eval)(asset.output);
+            let fn = global.parcelHotUpdate[asset.id];
             modules[asset.id] = [
                 fn,
                 deps
@@ -447,19 +424,19 @@ function hmrApply(bundle, asset) {
     }
 }
 function hmrDelete(bundle, id1) {
-    var modules = bundle.modules;
+    let modules = bundle.modules;
     if (!modules) return;
     if (modules[id1]) {
         // Collect dependencies that will become orphaned when this module is deleted.
-        var deps = modules[id1][1];
-        var orphans = [];
-        for(var dep in deps){
-            var parents = getParents(module.bundle.root, deps[dep]);
+        let deps = modules[id1][1];
+        let orphans = [];
+        for(let dep in deps){
+            let parents = getParents(module.bundle.root, deps[dep]);
             if (parents.length === 1) orphans.push(deps[dep]);
         } // Delete the module. This must be done before deleting dependencies in case of circular dependencies.
         delete modules[id1];
         delete bundle.cache[id1]; // Now delete the orphans.
-        orphans.forEach(function(id) {
+        orphans.forEach((id)=>{
             hmrDelete(module.bundle.root, id);
         });
     } else if (bundle.parent) hmrDelete(bundle.parent, id1);
@@ -467,22 +444,22 @@ function hmrDelete(bundle, id1) {
 function hmrAcceptCheck(bundle, id, depsByBundle) {
     if (hmrAcceptCheckOne(bundle, id, depsByBundle)) return true;
      // Traverse parents breadth first. All possible ancestries must accept the HMR update, or we'll reload.
-    var parents = getParents(module.bundle.root, id);
-    var accepted = false;
+    let parents = getParents(module.bundle.root, id);
+    let accepted = false;
     while(parents.length > 0){
-        var v = parents.shift();
-        var a = hmrAcceptCheckOne(v[0], v[1], null);
+        let v = parents.shift();
+        let a = hmrAcceptCheckOne(v[0], v[1], null);
         if (a) // If this parent accepts, stop traversing upward, but still consider siblings.
         accepted = true;
         else {
             // Otherwise, queue the parents in the next level upward.
-            var p = getParents(module.bundle.root, v[1]);
+            let p = getParents(module.bundle.root, v[1]);
             if (p.length === 0) {
                 // If there are no parents, then we've reached an entry without accepting. Reload.
                 accepted = false;
                 break;
             }
-            parents.push.apply(parents, _toConsumableArray(p));
+            parents.push(...p);
         }
     }
     return accepted;
@@ -601,43 +578,43 @@ const MetaMaskClientCheck = () => {
 MetaMaskClientCheck(); */ var _onboarding = require("@metamask/onboarding");
 var _onboardingDefault = parcelHelpers.interopDefault(_onboarding);
 const player = document.querySelector(".success-anim");
-const onboarding = new _onboardingDefault.default();
-const btn = document.querySelector('.onboard');
-const statusText = document.querySelector('h1');
-const statusDesc = document.querySelector('.desc');
-const loader = document.querySelector('.loader');
-const upArrow = document.querySelector('.up');
-const confetti = document.querySelector('.confetti');
+const onboarding = new (0, _onboardingDefault.default)();
+const btn = document.querySelector(".onboard");
+const statusText = document.querySelector("h1");
+const statusDesc = document.querySelector(".desc");
+const loader = document.querySelector(".loader");
+const upArrow = document.querySelector(".up");
+const confetti = document.querySelector(".confetti");
 const isMetaMaskInstalled = ()=>{
     const { ethereum  } = window;
     return Boolean(ethereum && ethereum.isMetaMask);
 };
 let connected = (accounts)=>{
-    statusText.innerHTML = 'Connected!';
-    statusDesc.classList.add('account');
+    statusText.innerHTML = "Connected!";
+    statusDesc.classList.add("account");
     statusDesc.innerHTML = accounts[0];
-    btn.style.display = 'none';
-    loader.style.display = 'none';
-    upArrow.style.display = 'none';
-    confetti.style.display = 'block';
+    btn.style.display = "none";
+    loader.style.display = "none";
+    upArrow.style.display = "none";
+    confetti.style.display = "block";
     player.play();
-    statusDesc.classList.add('account');
+    statusDesc.classList.add("account");
 };
 async function connectWallet() {
     return await ethereum.request({
-        method: 'eth_accounts'
+        method: "eth_accounts"
     });
 }
 const onClickInstallMetaMask = ()=>{
     onboarding.startOnboarding();
-    loader.style.display = 'block';
+    loader.style.display = "block";
 };
-btn.addEventListener('click', async ()=>{
-    btn.style.backgroundColor = '#cccccc';
-    loader.style.display = 'block';
+btn.addEventListener("click", async ()=>{
+    btn.style.backgroundColor = "#cccccc";
+    loader.style.display = "block";
     try {
         const accounts = await ethereum.request({
-            method: 'eth_requestAccounts'
+            method: "eth_requestAccounts"
         });
         connected(accounts);
     } catch (error) {
@@ -646,17 +623,17 @@ btn.addEventListener('click', async ()=>{
 });
 const MetaMaskClientCheck = ()=>{
     if (!isMetaMaskInstalled()) {
-        statusText.innerText = 'You need to Install a Wallet';
-        statusDesc.innerText = 'We recommend the MetaMask wallet.';
-        btn.innerText = 'Install MetaMask';
+        statusText.innerText = "You need to Install a Wallet";
+        statusDesc.innerText = "We recommend the MetaMask wallet.";
+        btn.innerText = "Install MetaMask";
         btn.onclick = onClickInstallMetaMask;
     } else connectWallet().then((accounts)=>{
         if (accounts && accounts[0] > 0) connected(accounts);
         else {
-            statusText.innerHTML = 'Connect your wallet';
+            statusText.innerHTML = "Connect your wallet";
             statusDesc.innerHTML = `To begin, please connect your MetaMask wallet.`;
-            btn.innerText = 'Connect MetaMask';
-            upArrow.style.display = 'block';
+            btn.innerText = "Connect MetaMask";
+            upArrow.style.display = "block";
         }
     });
 };
@@ -803,24 +780,24 @@ function __generator(thisArg, body) {
     }
 }
 var ONBOARDING_STATE = {
-    INSTALLED: 'INSTALLED',
-    NOT_INSTALLED: 'NOT_INSTALLED',
-    REGISTERED: 'REGISTERED',
-    REGISTERING: 'REGISTERING',
-    RELOADING: 'RELOADING'
+    INSTALLED: "INSTALLED",
+    NOT_INSTALLED: "NOT_INSTALLED",
+    REGISTERED: "REGISTERED",
+    REGISTERING: "REGISTERING",
+    RELOADING: "RELOADING"
 };
 var EXTENSION_DOWNLOAD_URL = {
-    CHROME: 'https://chrome.google.com/webstore/detail/metamask/nkbihfbeogaeaoehlefnkodbefgpgknn',
-    FIREFOX: 'https://addons.mozilla.org/firefox/addon/ether-metamask/',
-    DEFAULT: 'https://metamask.io'
+    CHROME: "https://chrome.google.com/webstore/detail/metamask/nkbihfbeogaeaoehlefnkodbefgpgknn",
+    FIREFOX: "https://addons.mozilla.org/firefox/addon/ether-metamask/",
+    DEFAULT: "https://metamask.io"
 };
 // sessionStorage key
-var REGISTRATION_IN_PROGRESS = 'REGISTRATION_IN_PROGRESS';
+var REGISTRATION_IN_PROGRESS = "REGISTRATION_IN_PROGRESS";
 // forwarder iframe id
-var FORWARDER_ID = 'FORWARDER_ID';
+var FORWARDER_ID = "FORWARDER_ID";
 var Onboarding = /** @class */ function() {
     function Onboarding1(_a) {
-        var _b = _a === void 0 ? {} : _a, _c = _b.forwarderOrigin, forwarderOrigin = _c === void 0 ? 'https://fwd.metamask.io' : _c, _d = _b.forwarderMode, forwarderMode = _d === void 0 ? Onboarding1.FORWARDER_MODE.INJECT : _d;
+        var _b = _a === void 0 ? {} : _a, _c = _b.forwarderOrigin, forwarderOrigin = _c === void 0 ? "https://fwd.metamask.io" : _c, _d = _b.forwarderMode, forwarderMode = _d === void 0 ? Onboarding1.FORWARDER_MODE.INJECT : _d;
         this.forwarderOrigin = forwarderOrigin;
         this.forwarderMode = forwarderMode;
         this.state = Onboarding1.isMetaMaskInstalled() ? ONBOARDING_STATE.INSTALLED : ONBOARDING_STATE.NOT_INSTALLED;
@@ -833,13 +810,13 @@ var Onboarding = /** @class */ function() {
         this._openDownloadPage = this._openDownloadPage.bind(this);
         this.startOnboarding = this.startOnboarding.bind(this);
         this.stopOnboarding = this.stopOnboarding.bind(this);
-        window.addEventListener('message', this._onMessage);
-        if (forwarderMode === Onboarding1.FORWARDER_MODE.INJECT && sessionStorage.getItem(REGISTRATION_IN_PROGRESS) === 'true') Onboarding1._injectForwarder(this.forwarderOrigin);
+        window.addEventListener("message", this._onMessage);
+        if (forwarderMode === Onboarding1.FORWARDER_MODE.INJECT && sessionStorage.getItem(REGISTRATION_IN_PROGRESS) === "true") Onboarding1._injectForwarder(this.forwarderOrigin);
     }
     Onboarding1.prototype._onMessage = function(event) {
         if (event.origin !== this.forwarderOrigin) // Ignoring non-forwarder message
         return undefined;
-        if (event.data.type === 'metamask:reload') return this._onMessageFromForwarder(event);
+        if (event.data.type === "metamask:reload") return this._onMessageFromForwarder(event);
         console.debug("Unknown message from '" + event.origin + "' with data " + JSON.stringify(event.data));
         return undefined;
     };
@@ -885,13 +862,13 @@ var Onboarding = /** @class */ function() {
                             7
                         ];
                     case 1:
-                        console.debug('Ignoring message while reloading');
+                        console.debug("Ignoring message while reloading");
                         return [
                             3 /*break*/ ,
                             8
                         ];
                     case 2:
-                        console.debug('Reloading now to register with MetaMask');
+                        console.debug("Reloading now to register with MetaMask");
                         this.state = ONBOARDING_STATE.RELOADING;
                         location.reload();
                         return [
@@ -899,7 +876,7 @@ var Onboarding = /** @class */ function() {
                             8
                         ];
                     case 3:
-                        console.debug('Registering with MetaMask');
+                        console.debug("Registering with MetaMask");
                         this.state = ONBOARDING_STATE.REGISTERING;
                         return [
                             4 /*yield*/ ,
@@ -909,7 +886,7 @@ var Onboarding = /** @class */ function() {
                         _b.sent();
                         this.state = ONBOARDING_STATE.REGISTERED;
                         event.source.postMessage({
-                            type: 'metamask:registrationCompleted'
+                            type: "metamask:registrationCompleted"
                         }, event.origin);
                         this.stopOnboarding();
                         return [
@@ -917,13 +894,13 @@ var Onboarding = /** @class */ function() {
                             8
                         ];
                     case 5:
-                        console.debug('Already registering - ignoring reload message');
+                        console.debug("Already registering - ignoring reload message");
                         return [
                             3 /*break*/ ,
                             8
                         ];
                     case 6:
-                        console.debug('Already registered - ignoring reload message');
+                        console.debug("Already registered - ignoring reload message");
                         return [
                             3 /*break*/ ,
                             8
@@ -942,7 +919,7 @@ var Onboarding = /** @class */ function() {
     /**
      * Starts onboarding by opening the MetaMask download page and the Onboarding forwarder
      */ Onboarding1.prototype.startOnboarding = function() {
-        sessionStorage.setItem(REGISTRATION_IN_PROGRESS, 'true');
+        sessionStorage.setItem(REGISTRATION_IN_PROGRESS, "true");
         this._openDownloadPage();
         this._openForwarder();
     };
@@ -952,20 +929,20 @@ var Onboarding = /** @class */ function() {
      * Typically this function is not necessary, but it can be useful for cases where
      * onboarding completes before the forwarder has registered.
      */ Onboarding1.prototype.stopOnboarding = function() {
-        if (sessionStorage.getItem(REGISTRATION_IN_PROGRESS) === 'true') {
+        if (sessionStorage.getItem(REGISTRATION_IN_PROGRESS) === "true") {
             if (this.forwarderMode === Onboarding1.FORWARDER_MODE.INJECT) {
-                console.debug('Removing forwarder');
+                console.debug("Removing forwarder");
                 Onboarding1._removeForwarder();
             }
-            sessionStorage.setItem(REGISTRATION_IN_PROGRESS, 'false');
+            sessionStorage.setItem(REGISTRATION_IN_PROGRESS, "false");
         }
     };
     Onboarding1.prototype._openForwarder = function() {
-        if (this.forwarderMode === Onboarding1.FORWARDER_MODE.OPEN_TAB) window.open(this.forwarderOrigin, '_blank');
+        if (this.forwarderMode === Onboarding1.FORWARDER_MODE.OPEN_TAB) window.open(this.forwarderOrigin, "_blank");
         else Onboarding1._injectForwarder(this.forwarderOrigin);
     };
     Onboarding1.prototype._openDownloadPage = function() {
-        window.open(this.downloadUrl, '_blank');
+        window.open(this.downloadUrl, "_blank");
     };
     /**
      * Checks whether the MetaMask extension is installed
@@ -974,17 +951,17 @@ var Onboarding = /** @class */ function() {
     };
     Onboarding1._register = function() {
         return window.ethereum.request({
-            method: 'wallet_registerOnboarding'
+            method: "wallet_registerOnboarding"
         });
     };
     Onboarding1._injectForwarder = function(forwarderOrigin) {
         var container = document.body;
-        var iframe = document.createElement('iframe');
-        iframe.setAttribute('height', '0');
-        iframe.setAttribute('width', '0');
-        iframe.setAttribute('style', 'display: none;');
-        iframe.setAttribute('src', forwarderOrigin);
-        iframe.setAttribute('id', FORWARDER_ID);
+        var iframe = document.createElement("iframe");
+        iframe.setAttribute("height", "0");
+        iframe.setAttribute("width", "0");
+        iframe.setAttribute("style", "display: none;");
+        iframe.setAttribute("src", forwarderOrigin);
+        iframe.setAttribute("id", FORWARDER_ID);
         container.insertBefore(iframe, container.children[0]);
     };
     Onboarding1._removeForwarder = function() {
@@ -992,17 +969,17 @@ var Onboarding = /** @class */ function() {
         (_a = document.getElementById(FORWARDER_ID)) === null || _a === void 0 || _a.remove();
     };
     Onboarding1._detectBrowser = function() {
-        var browserInfo = _bowserDefault.default.parse(window.navigator.userAgent);
-        if (browserInfo.browser.name === 'Firefox') return 'FIREFOX';
+        var browserInfo = (0, _bowserDefault.default).parse(window.navigator.userAgent);
+        if (browserInfo.browser.name === "Firefox") return "FIREFOX";
         else if ([
-            'Chrome',
-            'Chromium'
-        ].includes(browserInfo.browser.name || '')) return 'CHROME';
+            "Chrome",
+            "Chromium"
+        ].includes(browserInfo.browser.name || "")) return "CHROME";
         return null;
     };
     Onboarding1.FORWARDER_MODE = {
-        INJECT: 'INJECT',
-        OPEN_TAB: 'OPEN_TAB'
+        INJECT: "INJECT",
+        OPEN_TAB: "OPEN_TAB"
     };
     return Onboarding1;
 }();
@@ -2480,13 +2457,13 @@ exports.interopDefault = function(a) {
     };
 };
 exports.defineInteropFlag = function(a) {
-    Object.defineProperty(a, '__esModule', {
+    Object.defineProperty(a, "__esModule", {
         value: true
     });
 };
 exports.exportAll = function(source, dest) {
     Object.keys(source).forEach(function(key) {
-        if (key === 'default' || key === '__esModule' || dest.hasOwnProperty(key)) return;
+        if (key === "default" || key === "__esModule" || dest.hasOwnProperty(key)) return;
         Object.defineProperty(dest, key, {
             enumerable: true,
             get: function() {
@@ -2503,6 +2480,6 @@ exports.export = function(dest, destName, get) {
     });
 };
 
-},{}]},["V9qaj","cTzWq"], "cTzWq", "parcelRequire94c2")
+},{}]},["kRtS3","cTzWq"], "cTzWq", "parcelRequire94c2")
 
 //# sourceMappingURL=index.17ce0ca8.js.map
